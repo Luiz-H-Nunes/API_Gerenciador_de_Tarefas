@@ -1,16 +1,20 @@
 package com.example.taskmanager.service;
 
-import com.example.taskmanager.Tasks;
+import com.example.taskmanager.dominio.Tasks;
+import com.example.taskmanager.execpitions.TaskNotFoundException;
 
 import java.util.List;
 
 public class UserTaks {
     private InterfaceTaskService interfaceTaskService;
-    public void setInterfaceTaskService(InterfaceTaskService interfaceTaskService) {
+    public UserTaks(InterfaceTaskService interfaceTaskService) {
         this.interfaceTaskService = interfaceTaskService;
     }
     public Tasks newTask(String name, String description, String deadline, String titulo, int idUser){
-       return interfaceTaskService.newTask(name, description, deadline, titulo, idUser);
+
+        if (titulo == null){throw new TaskNotFoundException("Title is Null");}
+
+        return interfaceTaskService.newTask(name, description, deadline, titulo, idUser);
     }
     public List<Tasks> tasksUser(int id){
         return interfaceTaskService.tasksUser(id);

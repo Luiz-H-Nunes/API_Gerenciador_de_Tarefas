@@ -1,7 +1,6 @@
 package com.example.taskmanager.service;
 
-import com.example.taskmanager.User;
-import com.example.taskmanager.repository.BancoDeDados;
+import com.example.taskmanager.dominio.User;
 
 public interface InterfaceUserService {
     public void save(User user);

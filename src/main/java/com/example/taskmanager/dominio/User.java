@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.dominio;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ public class User {
 
 
 
-    public User(int id, String email, String name) {
+    public User(int id, String name, String email) {
         this.id = id;
         this.email = email;
         this.name = Objects.requireNonNull(name);
@@ -34,5 +34,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

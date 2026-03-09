@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.dominio;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public class Tasks {
 
     public Tasks(int id, String titulo, String descricao, Status status, int usuarioId) {
         this.id = id;
-        this.titulo = Objects.requireNonNull(titulo);
+        this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
         this.usuarioId = usuarioId;

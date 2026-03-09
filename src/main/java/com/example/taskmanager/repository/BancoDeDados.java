@@ -1,8 +1,9 @@
 package com.example.taskmanager.repository;
 
-import com.example.taskmanager.Tasks;
-import com.example.taskmanager.User;
+import com.example.taskmanager.dominio.Tasks;
+import com.example.taskmanager.dominio.User;
 import com.example.taskmanager.execpitions.EmailAlreadyExistsException;
+import com.example.taskmanager.execpitions.UserNotFoundException;
 import com.example.taskmanager.service.InterfaceTaskService;
 import com.example.taskmanager.service.InterfaceUserService;
 
@@ -85,8 +86,14 @@ public class BancoDeDados implements InterfaceUserService, InterfaceTaskService 
 
     @Override
     public Tasks newTask(String name, String description, String deadline, String titulo,int idUser) {
+
+        if(getUsers().stream().noneMatch(u -> u.getId() == idUser )){
+            throw new UserNotFoundException("UserNotFound");
+        }
+
         Tasks tasks = new Tasks(geradorId(Tasks.class),titulo,description, Tasks.Status.PENDENTE,idUser);
         saveTasks(tasks);
+
         return tasks;
     }
 
@@ -107,5 +114,13 @@ public class BancoDeDados implements InterfaceUserService, InterfaceTaskService 
     @Override
     public boolean removeTask(String titulo) {
         return getTasks().removeIf(n -> n.getTitulo().equals(titulo));
+    }
+
+    @Override
+    public String toString() {
+        return "BancoDeDados{" +
+                "users=" + users +
+                ", tasks=" + tasks +
+                '}';
     }
 }
