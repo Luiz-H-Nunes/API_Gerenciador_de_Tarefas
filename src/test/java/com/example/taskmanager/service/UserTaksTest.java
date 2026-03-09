@@ -16,7 +16,7 @@ class UserTaksTest {
     void newTask_testIfNotAcceptTitleNull_ReturnTaskNotFoundException() {
         UserRepositoryMemory userRepositoryMemory = new UserRepositoryMemory(new ArrayList<>());
         TaskRepositoryMemory taskRepositoryMemory = new TaskRepositoryMemory(new ArrayList<>());
-        UserTaks userTaks = new UserTaks(taskRepositoryMemory, userRepositoryMemory);
+        TaskService userTaks = new TaskService(taskRepositoryMemory, userRepositoryMemory);
         UserService userService = new UserService(userRepositoryMemory);
         userService.newUser("test","test@testmail.com");
 
@@ -29,7 +29,7 @@ class UserTaksTest {
     void newTask_testIfNotAcceptToHaveCreateForUserNull_ReturnUserNotFoundException() {
         UserRepositoryMemory userRepositoryMemory = new UserRepositoryMemory(new ArrayList<>());
         TaskRepositoryMemory taskRepositoryMemory = new TaskRepositoryMemory(new ArrayList<>());
-        UserTaks userTaks = new UserTaks(taskRepositoryMemory,userRepositoryMemory);
+        TaskService userTaks = new TaskService(taskRepositoryMemory,userRepositoryMemory);
 
         Assertions.assertThrows(UserNotFoundException.class,() -> userTaks.newTask("nameTest","descripitionTest",
                 "deadlineTest","titleTest",1));

@@ -1,15 +1,15 @@
 package com.example.taskmanager.repository;
 
-import com.example.taskmanager.model.Tasks;
-import com.example.taskmanager.model.User;
+import com.example.taskmanager.model.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InterfaceTaskRepository {
-    public void save(Tasks task);
-    public int geradorId();
-    public List<Tasks> findAll();
-    public List<Tasks> findByidUser(int idUser);
-    boolean deleteByTitulo(String titulo);
+     void save(Task task);
+     int generateId();
+     List<Task> findAll();
+     Optional<List<Task>> findByUserId(int idUser);
+    boolean deleteByTitle(String titulo);
 
 }

@@ -16,7 +16,7 @@ public class UserService {
                 throw new EmailAlreadyExistsException(email + " Is Aleready");
             }
 
-            User user = new User(interfaceUserRepository.geradorId(),name,email);
+            User user = new User(interfaceUserRepository.generateId(),name,email);
             interfaceUserRepository.save(user);
             return user;
         }

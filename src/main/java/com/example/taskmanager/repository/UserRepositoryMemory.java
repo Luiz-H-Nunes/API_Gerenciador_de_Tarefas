@@ -27,18 +27,18 @@ public class UserRepositoryMemory implements InterfaceUserRepository {
     }
 
     @Override
-    public int geradorId() {
+    public int generateId() {
         return getUsers().stream()
                 .mapToInt(User::getId)
                 .max()
                 .orElse(0) + 1;
     }
     @Override
-    public Boolean emailExists(String email) {
+    public boolean emailExists(String email) {
         return getUsers().stream().anyMatch(u -> u.getEmail().equals(email));
     }
     @Override
-    public Boolean idExists(int id) {
+    public boolean existsByIdUser(int id) {
         return getUsers().stream().anyMatch(user ->  user.getId() == id);
     }
 
