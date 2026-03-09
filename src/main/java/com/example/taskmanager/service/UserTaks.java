@@ -1,28 +1,56 @@
 package com.example.taskmanager.service;
 
-import com.example.taskmanager.dominio.Tasks;
-import com.example.taskmanager.execpitions.TaskNotFoundException;
+import com.example.taskmanager.exception.UserNotFoundException;
+import com.example.taskmanager.model.Tasks;
+import com.example.taskmanager.exception.TaskNotFoundException;
+import com.example.taskmanager.repository.InterfaceTaskRepository;
+import com.example.taskmanager.repository.InterfaceUserRepository;
+import com.example.taskmanager.repository.UserRepositoryMemory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserTaks {
-    private InterfaceTaskService interfaceTaskService;
-    public UserTaks(InterfaceTaskService interfaceTaskService) {
+    private InterfaceTaskRepository interfaceTaskService;
+    private InterfaceUserRepository interfaceUserService;
+
+
+    public UserTaks(InterfaceTaskRepository interfaceTaskService, InterfaceUserRepository interfaceUserService) {
         this.interfaceTaskService = interfaceTaskService;
+        this.interfaceUserService = interfaceUserService;
     }
+
+
+
     public Tasks newTask(String name, String description, String deadline, String titulo, int idUser){
 
-        if (titulo == null){throw new TaskNotFoundException("Title is Null");}
+        if (titulo == null) throw new TaskNotFoundException("Title is Null");
 
-        return interfaceTaskService.newTask(name, description, deadline, titulo, idUser);
+            if (!interfaceUserService.idExists(idUser)) {
+                throw new UserNotFoundException("UserNotFound");
+            }
+
+            Tasks tasks = new Tasks(interfaceTaskService.geradorId(), titulo, description, Tasks.Status.PENDENTE, idUser);
+            interfaceTaskService.save(tasks);
+
+            return tasks;
+
+
+        }
+
+
+    public List<Tasks> tasksUser(int idUser){
+        return interfaceTaskService.findByidUser(idUser);
     }
-    public List<Tasks> tasksUser(int id){
-        return interfaceTaskService.tasksUser(id);
-    }
-    public List<Tasks> ConcluidedTask(String titulo){
-        return interfaceTaskService.ConcluidedTask(titulo);
+    public void ConcluidedTask(String titulo){
+                interfaceTaskService.
+                        findAll().stream().
+                        filter(tasks -> tasks.getTitulo().equals(titulo)).
+                        findFirst().
+                        ifPresent(Tasks::concluidedStatus);
+
     }
     public boolean removeTask(String titulo){
-        return interfaceTaskService.removeTask(titulo);
+        return interfaceTaskService.deleteByTitulo(titulo);
     }
 }

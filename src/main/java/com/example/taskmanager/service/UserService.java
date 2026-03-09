@@ -1,17 +1,25 @@
 package com.example.taskmanager.service;
 
-import com.example.taskmanager.dominio.User;
+import com.example.taskmanager.exception.EmailAlreadyExistsException;
+import com.example.taskmanager.model.User;
+import com.example.taskmanager.repository.InterfaceUserRepository;
 
 public class UserService {
-    InterfaceUserService interfaceUserService;
+    private final InterfaceUserRepository interfaceUserRepository;
 
-    public UserService(InterfaceUserService interfaceUserService) {
-        this.interfaceUserService = interfaceUserService;
+    public UserService(InterfaceUserRepository interfaceUserRepository) {
+        this.interfaceUserRepository = interfaceUserRepository;
     }
 
     public User newUser(String name,String email){
-        return interfaceUserService.update(name ,email);
+            if(interfaceUserRepository.emailExists(email)){
+                throw new EmailAlreadyExistsException(email + " Is Aleready");
+            }
+
+            User user = new User(interfaceUserRepository.geradorId(),name,email);
+            interfaceUserRepository.save(user);
+            return user;
+        }
     }
 
 
-}

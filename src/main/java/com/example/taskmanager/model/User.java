@@ -1,4 +1,4 @@
-package com.example.taskmanager.dominio;
+package com.example.taskmanager.model;
 
 import java.util.Objects;
 
